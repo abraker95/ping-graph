@@ -18,9 +18,9 @@ void ColorTable::AddValueMap(double _val, irr::video::SColor _color)
 
 irr::video::SColor ColorTable::getColor(double _val)
 {
-	for (std::pair<double, irr::video::SColor> val : table)
+	for (int i = table.size() - 1; i >= 0; i--)
 	{
-		if (_val > val.first)
-			return val.second;
+		if (_val >= table[i].first)
+			return table[i].second;
 	}
 }
