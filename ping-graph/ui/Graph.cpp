@@ -51,6 +51,12 @@ void Graph::SetStaticParam(std::vector<double> *_xVal, std::vector<double> *_yVa
 	for (double val : *_yVal)	vals.second.push(val);
 }
 
+void Graph::Clear()
+{
+	while (vals.first.size() > 0)	vals.first.pop();
+	while (vals.second.size() > 0)	vals.second.pop();
+}
+
 void Graph::setWindow(double _xBeg, double _yBeg, double _xEnd, double _yEnd)
 {
 	xBeg = _xBeg;	yBeg = _yBeg;

@@ -17,6 +17,8 @@ class Graph: public GuiObj
 		void SetContParam(double* _xVal, double *_yVal, double _maxVals);
 		void SetStaticParam(std::vector<double> *_xVal, std::vector<double> *_yVal, double _maxVals);
 		
+		void Clear();
+
 		void setWindow(double _xBeg, double _yBeg, double _xEnd, double _yEnd);
 		void Resize(int _width, int _height);
 
