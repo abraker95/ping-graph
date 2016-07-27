@@ -5,6 +5,10 @@ Graph::Graph(int _xpos, int _ypos, int _width, int _height, GuiObj* _parent) : G
 {
 	xVal = nullptr;
 	yVal = nullptr;
+
+	table.AddValueMap(0, SColor(255, 100, 255, 175));
+	table.AddValueMap(100, SColor(255, 255, 175, 100));
+	table.AddValueMap(1000, SColor(255, 255, 100, 100));
 }
 
 Graph::~Graph()
