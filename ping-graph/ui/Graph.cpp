@@ -104,9 +104,6 @@ void Graph::Draw(Window &_win)
 
 		SColor color = table.getColor(currVal);
 
-		//currVal /= 10.0;
-		//prevVal /= 10.0;
-
 		vector2di p1(Val2Pos(i, X_AXIS), Val2Pos(prevVal, Y_AXIS));
 		vector2di p2(Val2Pos(i + 1, X_AXIS), Val2Pos(currVal, Y_AXIS));
 
