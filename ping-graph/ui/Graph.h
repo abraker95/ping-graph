@@ -10,6 +10,7 @@
 class Graph: public GuiObj
 {
 	public:
+		Graph();
 		Graph(int _xpos, int _ypos, int _width, int _height, GuiObj* _parent = nullptr);
 		virtual ~Graph();
 

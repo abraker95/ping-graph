@@ -1,6 +1,18 @@
 #include "Graph.h"
 #include "../utils/mathUtils.h"
 
+Graph::Graph() : GuiObj(0, 0, 100, 100, nullptr)
+{
+	xVal = nullptr;
+	yVal = nullptr;
+
+	table.AddValueMap(0, SColor(255, 100, 255, 175));
+	table.AddValueMap(100, SColor(255, 255, 175, 100));
+	table.AddValueMap(1000, SColor(255, 255, 100, 100));
+
+	setWindow(-10, -10, 10, 10);
+}
+
 Graph::Graph(int _xpos, int _ypos, int _width, int _height, GuiObj* _parent) : GuiObj(_xpos, _ypos, _width, _height, _parent)
 {
 	xVal = nullptr;
