@@ -63,6 +63,8 @@ int main()
 
 	Graph graph(10, 10, 100, 100);
 		graph.SetContParam(&time, &ms, 1000);
+		graph.setWindow(0, 0, 1000, 1000);
+		graph.Resize(500, 100);
 
 	std::thread first(Ping);
 

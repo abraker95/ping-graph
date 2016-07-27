@@ -9,6 +9,8 @@ Graph::Graph(int _xpos, int _ypos, int _width, int _height, GuiObj* _parent) : G
 	table.AddValueMap(0, SColor(255, 100, 255, 175));
 	table.AddValueMap(100, SColor(255, 255, 175, 100));
 	table.AddValueMap(1000, SColor(255, 255, 100, 100));
+
+	setWindow(-10, -10, 10, 10);
 }
 
 Graph::~Graph()
@@ -16,8 +18,10 @@ Graph::~Graph()
 
 }
 
-void Graph::SetParam(double* _xVal, double *_yVal, double _maxVals)
+void Graph::SetContParam(double *_xVal, double *_yVal, double _maxVals)
 {
+	cont = true;
+
 	xVal = _xVal;
 	yVal = _yVal;
 	maxVals = _maxVals;
@@ -26,9 +30,47 @@ void Graph::SetParam(double* _xVal, double *_yVal, double _maxVals)
 	while (vals.second.size() > maxVals)	vals.second.pop();
 }
 
+void Graph::SetStaticParam(std::vector<double> *_xVal, std::vector<double> *_yVal, double _maxVals)
+{
+	cont = false;
+	maxVals = _maxVals;
+
+	for (double val : *_xVal)	vals.first.push(val);
+	for (double val : *_yVal)	vals.second.push(val);
+}
+
+void Graph::setWindow(double _xBeg, double _yBeg, double _xEnd, double _yEnd)
+{
+	xBeg = _xBeg;	yBeg = _yBeg;
+	xEnd = _xEnd;	yEnd = _yEnd;
+}
+
 void Graph::Resize(int _width, int _height)
 {
+	width = _width;
+	height = _height;
+}
 
+double Graph::Val2Pos(double _val, AXIS _axis)
+{
+	double pos = 0;
+
+	switch (_axis)
+	{
+		case X_AXIS:
+			pos = absXpos + getPercent(xBeg, _val, xEnd)*width;
+			return BOUND(xBeg, pos, xEnd);
+			break;
+
+		case Y_AXIS:
+			pos = absYpos + (height - getPercent(yBeg, _val, yEnd)*height);
+			return BOUND(yBeg, pos, yEnd);
+			break;
+
+		default:
+			return -1;
+			break;
+	};
 }
 
 void Graph::Draw(Window &_win)
@@ -44,32 +86,36 @@ void Graph::Draw(Window &_win)
 
 		SColor color = table.getColor(currVal);
 
-		currVal /= 10.0;
-		prevVal /= 10.0;
+		//currVal /= 10.0;
+		//prevVal /= 10.0;
 
-		currVal = height - currVal;
-		prevVal = height - prevVal;
+		vector2di p1(Val2Pos(i, X_AXIS), Val2Pos(prevVal, Y_AXIS));
+		vector2di p2(Val2Pos(i + 1, X_AXIS), Val2Pos(currVal, Y_AXIS));
 
-		_win.driver->draw2DLine(vector2di(absXpos + i, absYpos + prevVal), vector2di(absXpos + i + 1, absYpos + currVal), color);
+		_win.driver->draw2DLine(p1, p2, color);
 	}
 
 	double val = vals.second._Get_container()[i - 1];
-	_win.font->draw(core::stringw(val), rect<s32>(absXpos + i + 10, absYpos + (height - val / 10.0), absXpos + 100, absYpos + 10), SColor(255, 255, 255, 255));
+	_win.font->draw(core::stringw(val), rect<s32>(Val2Pos(i, X_AXIS) + 10, Val2Pos(val, Y_AXIS), absXpos + 100, absYpos + 10), SColor(255, 255, 255, 255));
 
-	_win.font->draw(core::stringw(1000), rect<s32>(absXpos, absYpos + (height - 1000.0 / 10.0), absXpos + 100, absYpos + 10), SColor(255, 255, 100, 100));
-	_win.font->draw(core::stringw(100), rect<s32>(absXpos, absYpos + (height - 100.0 / 10.0), absXpos + 100, absYpos + 10), SColor(255, 255, 175, 100));
-	_win.font->draw(core::stringw(0), rect<s32>(absXpos, absYpos + (height - 0.0 / 10.0), absXpos + 100, absYpos + 10), SColor(255, 100, 255, 175));
+	_win.font->draw(core::stringw(1000), rect<s32>(absXpos, Val2Pos(1000, Y_AXIS), absXpos + 100, absYpos + 10), table.getColor(1000));
+	_win.font->draw(core::stringw(100), rect<s32>(absXpos, Val2Pos(100, Y_AXIS), absXpos + 100, absYpos + 10), table.getColor(100));
+	_win.font->draw(core::stringw(0), rect<s32>(absXpos, Val2Pos(0, Y_AXIS), absXpos + 100, absYpos + 10), table.getColor(0));
+
+	_win.driver->draw2DRectangleOutline(recti(absXpos, absYpos, absXpos + width, absYpos + height), SColor(255, 255, 255, 255));
 }
 
 void Graph::UpdateInternal(Window &_win)
 {
-	if (xVal == nullptr)	return;
-	if (yVal == nullptr)	return;
+	if (cont)
+	{
+		if (xVal == nullptr)	return;
+		if (yVal == nullptr)	return;
 
-	vals.first.push(*xVal);
-	vals.second.push(*yVal);
+		vals.first.push(*xVal);
+		vals.second.push(*yVal);
 
-	while (vals.first.size() > maxVals)		vals.first.pop();
-	while (vals.second.size() > maxVals)	vals.second.pop();
-	
+		while (vals.first.size() > maxVals)		vals.first.pop();
+		while (vals.second.size() > maxVals)	vals.second.pop();
+	}
 }
