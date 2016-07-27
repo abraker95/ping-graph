@@ -112,6 +112,7 @@
   <ItemGroup>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ui\Button.cpp" />
+    <ClCompile Include="ui\ColorTable.cpp" />
     <ClCompile Include="ui\Dialog.cpp" />
     <ClCompile Include="ui\Event.cpp" />
     <ClCompile Include="ui\Graph.cpp" />
@@ -123,6 +124,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ui\Button.h" />
+    <ClInclude Include="ui\ColorTable.h" />
     <ClInclude Include="ui\Dialog.h" />
     <ClInclude Include="ui\drawUtils.h" />
     <ClInclude Include="ui\Event.h" />

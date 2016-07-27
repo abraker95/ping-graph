@@ -54,6 +54,9 @@
     <ClCompile Include="ui\Graph.cpp">
       <Filter>Source Files\ui</Filter>
     </ClCompile>
+    <ClCompile Include="ui\ColorTable.cpp">
+      <Filter>Source Files\ui</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ui\Button.h">
@@ -87,6 +90,9 @@
       <Filter>Header Files\utils</Filter>
     </ClInclude>
     <ClInclude Include="ui\Graph.h">
+      <Filter>Header Files\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="ui\ColorTable.h">
       <Filter>Header Files\ui</Filter>
     </ClInclude>
   </ItemGroup>

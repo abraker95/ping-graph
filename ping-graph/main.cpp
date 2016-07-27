@@ -62,7 +62,7 @@ int main()
 		win.device->setResizable(true);
 
 	Graph graph(10, 10, 100, 100);
-		graph.SetParam(&time, &ms, 1000);
+		graph.SetContParam(&time, &ms, 1000);
 
 	std::thread first(Ping);
 

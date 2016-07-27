@@ -38,13 +38,7 @@ void Graph::Draw(Window &_win)
 		double currVal = vals.second._Get_container()[i];
 		double prevVal = vals.second._Get_container()[i - 1];
 
-		SColor color;
-		if (BTWN(0, currVal, 100))
-			color = SColor(255, 100, 255, 175);
-		else if (BTWN(100, currVal, 1000))
-			color = SColor(255, 255, 175, 100);
-		else
-			color = SColor(255, 255, 100, 100);
+		SColor color = table.getColor(currVal);
 
 		currVal /= 10.0;
 		prevVal /= 10.0;

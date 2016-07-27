@@ -5,6 +5,7 @@
 
 #include "Window.h"
 #include "GuiObj.h"
+#include "ColorTable.h"
 
 class Graph: public GuiObj
 {
@@ -22,6 +23,7 @@ class Graph: public GuiObj
 		double *xVal, *yVal;
 		double maxVals;
 		std::pair<std::queue<double>, std::queue<double>> vals;
+		ColorTable table;
 };
 
 #endif
